@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/pilihButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:cardBackgroundColor="@color/colorButton1"
+            app:cardCornerRadius="25dp"
+            android:layout_below="@+id/pilih"
+            android:layout_marginLeft="40sp"
+            android:layout_marginRight="40sp"
+            android:layout_marginTop="35dp">
+            <TextView
+                android:id="@+id/nama_tabungan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="12dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/button_1"
+                android:textColor="@color/colorWord"
+                android:textStyle="bold"
+                android:elevation="2dp"
+                android:textSize="18dp"
+
+                />
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+</LinearLayout>

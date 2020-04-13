@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_home_a"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="15dp"
+        app:cardBackgroundColor="@color/colorWord"
+        app:cardCornerRadius="25dp"
+       app:cardElevation="10dp">
+        <ImageView
+            android:id="@+id/circle_1"
+            android:layout_width="480dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:paddingRight="320dp"
+            android:src="@drawable/circle_red" />
+        <ImageView
+            android:id="@+id/circle_2"
+            android:layout_width="720dp"
+            android:layout_height="420dp"
+            android:paddingRight="240dp"
+            android:src="@drawable/circle_green" />
+        <ImageView
+            android:id="@+id/circle_3"
+            android:layout_width="490dp"
+            android:layout_height="400dp"
+            android:paddingRight="360dp"
+            android:src="@drawable/circle_orange"/>
+        <TextView
+            android:id="@+id/nominal_saldo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25sp"
+            android:layout_marginTop="25dp"
+            android:text="Rp.10.000.000"
+            android:textColor="@color/colorWord"
+            android:textStyle="bold"
+            android:textSize="32sp"/>
+        <TextView
+            android:id="@+id/tahun"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2019/2020"
+            android:layout_marginTop="140dp"
+            android:layout_marginLeft="40dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/colorWord"
+            />
+        <TextView
+            android:id="@+id/aktif_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140dp"
+            android:layout_marginRight="40dp"
+            android:textStyle="bold"
+            android:gravity="right"
+            android:text="Aktif"
+            android:textColor="@color/colorWord"
+            android:textSize="20dp" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

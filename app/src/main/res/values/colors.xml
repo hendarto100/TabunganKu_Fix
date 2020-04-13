@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#009A44</color>
+    <color name="colorPrimaryDark">#30A4BF</color>
+    <color name="colorSecondary">#F6874F</color>
+    <color name="colorSecondaryDark">#205866</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorWord">#FFFFFF</color>
+    <color name="colorButton1">#00CA59</color>
+    <color name="colorButton2">#00BA52</color>
+    <color name="colorButton3">#009A44</color>
+    <color name="colorButton4">#F65300</color>
+    <color name="colorTabel">#BABABA</color>
+    <color name="black">#000000</color>
+    <color name="active">#5FE91E</color>
+    <color name="deactivate">#E91E1E</color>
+    <color name="tarik">#FF4040</color>
+    <color name="words">#969696</color>
+    <color name="line">#E5E5E5</color>
+
+</resources>

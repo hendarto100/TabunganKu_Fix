@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        app:cardBackgroundColor="@color/colorWord"
+        app:cardCornerRadius="25dp"
+        android:layout_below="@+id/kembali_home"
+        app:cardElevation="5dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/wallet"
+                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_margin="15dp"
+                android:src="@drawable/wallet"/>
+            <TextView
+                android:id="@+id/desc_tabungan_a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="80dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Tabungan Wajib"
+                />
+            <TextView
+                android:id="@+id/desc_home2_a"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15sp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_below="@id/desc_tabungan_a"
+                android:text="@string/desc_tabungan"
+                android:textColor="@color/words"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/waliKelas_home2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_below="@id/desc_home2_a"
+                android:text="Wali Kelas"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="20dp"/>
+            <TextView
+                android:id="@+id/namaWali_home2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/desc_home2_a"
+                android:layout_alignParentRight="true"
+                android:text="Tabungan Perbulan"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="20dp"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/perbulan_home2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_below="@id/waliKelas_home2"
+                android:text="Wali Kelas"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/nominal_perbulan_home2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/namaWali_home2"
+                android:layout_alignParentRight="true"
+                android:text="Tabungan Perbulan"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="20dp"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

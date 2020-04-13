@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorWord">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/kembali_home"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="30sp"
+                android:drawableLeft="@drawable/ic_arrow_back"
+                android:text="Kembali"
+                android:textStyle="bold"
+                android:textColor="@color/colorWord"
+                android:background="@drawable/tombol4"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_detail_a"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/kembali_home"/>
+
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
