@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.SplashScreen"
+        <activity android:name=".PdfDocument"></activity>
+        <activity
+            android:name=".activity.SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,29 +26,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.PilihTabungan"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity android:name=".activity.Login"
+        <activity
+            android:name=".activity.PilihTabungan"
             android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity
+            android:name=".activity.Login"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.Detail_tabunganC" />
         <activity android:name=".activity.Detail_tabunganB" />
         <activity android:name=".activity.Detail_tabunganA" />
-
-        <activity android:name=".MainActivity_TabunganC"
+        <activity
+            android:name=".MainActivity_TabunganC"
             android:label="@string/title_activity_main__tabungan_c"
-            android:theme="@style/NoActionBar"/>
-
-        <activity android:name=".MainActivity_TabunganB"
+            android:theme="@style/NoActionBar" />
+        <activity
+            android:name=".MainActivity_TabunganB"
             android:label="@string/title_activity_tabungan_b"
-            android:theme="@style/NoActionBar"/>
-
-        <activity android:name=".MainActivity_TabunganA"
+            android:theme="@style/NoActionBar" />
+        <activity
+            android:name=".MainActivity_TabunganA"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/mobile_navigation2">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation2"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.tabunganku_fix.fragment.HomeFragment_B"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home_tabungan_b" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.example.tabunganku_fix.fragment.LaporanFragment_B"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_laporan_tabungan_b" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.example.tabunganku_fix.fragment.InfoFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_info_tabungan" />
+
+    <fragment
+        android:id="@+id/nav_tools"
+        android:name="com.example.tabunganku_fix.fragment.PengaturanFragment"
+        android:label="@string/menu_tools"
+        tools:layout="@layout/fragment_pengaturan_tabungan" />
+    <fragment
+        android:id="@+id/nav_person"
+        android:name="com.example.tabunganku_fix.fragment.ProfileFragment"
+        android:label="@string/menu_person"
+        tools:layout="@layout/fragment_profile" />
 
 </navigation>

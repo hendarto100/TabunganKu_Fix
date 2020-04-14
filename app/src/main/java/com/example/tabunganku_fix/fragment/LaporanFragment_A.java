@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,10 +17,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.tabunganku_fix.PdfDocument;
 import com.example.tabunganku_fix.R;
 import com.example.tabunganku_fix.adapter.TabunganA_Adapter;
 import com.example.tabunganku_fix.api_helper.RetrofitClient;
@@ -39,7 +42,7 @@ public class LaporanFragment_A extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
-
+    Button download;
     RelativeLayout hide;
     ProgressBar bar;
     Context mContext;
@@ -53,6 +56,14 @@ public class LaporanFragment_A extends Fragment {
                 ViewModelProviders.of(this).get(LaporanViewModel_A.class);
         final View v = inflater.inflate(R.layout.fragment_laporan_tabungan_a, container, false);
         String token = user.getToken();
+        download = v.findViewById(R.id.download);
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PdfDocument.class);
+                startActivity(intent);
+            }
+        });
         bar = v.findViewById(R.id.bar_a);
         hide = v.findViewById(R.id.bar_laporan_a);
         final String nis2 = transaksi.getNis();
