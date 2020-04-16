@@ -16,7 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PdfDocument"></activity>
         <activity
             android:name=".activity.SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">

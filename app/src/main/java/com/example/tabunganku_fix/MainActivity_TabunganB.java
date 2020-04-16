@@ -12,22 +12,34 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tabunganku_fix.activity.PilihTabungan;
 import com.example.tabunganku_fix.api_helper.RetrofitClient;
+import com.example.tabunganku_fix.models.User;
 import com.example.tabunganku_fix.response.ProfileResponse;
 import com.example.tabunganku_fix.server.SharedPrefManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -40,6 +52,10 @@ public class MainActivity_TabunganB extends AppCompatActivity {
     Context mContext;
     TextView namaprofile;
     CircleImageView profile;
+    Bitmap bmp, test;
+    int page =0, width = 595, height = 842;
+
+    User users = SharedPrefManager.getInstance(this).getUser();
     String url = "http://192.168.100.10/TugasAkhir_TabunganKu/public/img/";
 
     @Override
@@ -57,6 +73,8 @@ public class MainActivity_TabunganB extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.icons1);
+        test = Bitmap.createScaledBitmap(bmp, 36, 36, false);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view_tabungan_b);
         // Passing each menu ID as a set of Ids because each
@@ -167,6 +185,74 @@ public class MainActivity_TabunganB extends AppCompatActivity {
         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+    public void onCreatePDF(View view){
+        PdfDocument myPdfDocument = new PdfDocument();
+        PdfDocument.PageInfo myPageInfo = new PdfDocument.PageInfo.Builder(width, height, page).create();
+        PdfDocument.Page myPage = myPdfDocument.startPage(myPageInfo);
+        Paint myPaint = new Paint();
+        Canvas canvas = myPage.getCanvas();
+        canvas.drawBitmap(test, 12, 12, myPaint);
+
+        //Nama Aplikas
+        Paint aplikasi = new Paint();
+        aplikasi.setTextAlign(Paint.Align.LEFT);
+        aplikasi.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        aplikasi.setTextSize(14);
+        canvas.drawText("TabunganKu", 50, 35, aplikasi);
+
+        //Nama Pengguna
+        Paint pengguna = new Paint();
+        pengguna.setTextAlign(Paint.Align.LEFT);
+        pengguna.setTextSize(10);
+        canvas.drawText("Nama Pengguna", 20, 75, pengguna);
+
+        //Nama Pengguna
+        Paint user = new Paint();
+        user.setTextAlign(Paint.Align.LEFT);
+        user.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        user.setTextSize(14);
+        canvas.drawText(users.getNama(), 20, 90, user);
+
+        //Kelas Pengguna
+        Paint kelas = new Paint();
+        kelas.setTextAlign(Paint.Align.LEFT);
+        kelas.setTextSize(10);
+        canvas.drawText("Kelas Pengguna", 20, 118, kelas);
+
+        //Kelas Pengguna
+        Paint kelas_user = new Paint();
+        kelas_user.setTextAlign(Paint.Align.LEFT);
+        kelas_user.setTextSize(10);
+        canvas.drawText(users.getKelas(), 20, 131, kelas_user);
+
+        //Jenis Tabungan
+        Paint jenis = new Paint();
+        jenis.setTextAlign(Paint.Align.RIGHT);
+        jenis.setTextSize(10);
+        canvas.drawText("Jenis Tabungan", 560, 118, jenis);
+
+        //Jenis Tabungan
+        Paint nama_tabungan = new Paint();
+        nama_tabungan.setTextAlign(Paint.Align.RIGHT);
+        nama_tabungan.setTextSize(10);
+        canvas.drawText("Tabungan Prestasi", 560, 131, nama_tabungan);
+
+        myPdfDocument.finishPage(myPage);
+
+        String myFilePath = Environment.getExternalStorageDirectory().getPath()+"/Laporan_Tabungan_Reguler.pdf";
+        File myFile = new File(myFilePath);
+
+        try {
+            myPdfDocument.writeTo(new FileOutputStream(myFile));
+            Toast.makeText(getApplicationContext(),"Laporan berhasil tersimpan", Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"Terjadi keselahan", Toast.LENGTH_SHORT).show();
+            //editText.setText("ERROR");
+        }
+        myPdfDocument.close();
     }
 }
 

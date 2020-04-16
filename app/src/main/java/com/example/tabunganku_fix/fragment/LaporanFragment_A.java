@@ -1,10 +1,15 @@
 package com.example.tabunganku_fix.fragment;
 
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,7 +27,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.example.tabunganku_fix.PdfDocument;
 import com.example.tabunganku_fix.R;
 import com.example.tabunganku_fix.adapter.TabunganA_Adapter;
 import com.example.tabunganku_fix.api_helper.RetrofitClient;
@@ -38,16 +42,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 public class LaporanFragment_A extends Fragment {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
-    Button download;
     RelativeLayout hide;
     ProgressBar bar;
     Context mContext;
+    Bitmap bmp, test;
+    int page =0;
+
     User user = SharedPrefManager.getInstance(getContext()).getUser();
     Transaksi transaksi = SharedPrefManager.getInstance(getContext()).getTransaksi();
+
     private LaporanViewModel_A laporanViewModelA;
     private MutableLiveData<List<Transaksi>> transaksiList;
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -56,39 +65,10 @@ public class LaporanFragment_A extends Fragment {
                 ViewModelProviders.of(this).get(LaporanViewModel_A.class);
         final View v = inflater.inflate(R.layout.fragment_laporan_tabungan_a, container, false);
         String token = user.getToken();
-        download = v.findViewById(R.id.download);
-        download.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PdfDocument.class);
-                startActivity(intent);
-            }
-        });
+
         bar = v.findViewById(R.id.bar_a);
         hide = v.findViewById(R.id.bar_laporan_a);
         final String nis2 = transaksi.getNis();
-
-       /* final ArrayList<Transaksi> itemList = new ArrayList<>();
-        itemList.add(new Transaksi(1, "A1234", "A12345", "Tabungan Wajib",
-                "Tarik", 100000));
-        itemList.add(new Transaksi(2, "A1234", "A12345", "Tabungan Wajib",
-                "Tarik", 100000));
-        itemList.add(new Transaksi(3, "A1234", "A12345", "Tabungan Wajib",
-                "Tarik", 100000));
-        itemList.add(new Transaksi(4, "A1234", "A12345", "Tabungan Wajib",
-                "Tarik", 100000));
-        itemList.add(new Transaksi(5, "A1234", "A12345", "Tabungan Wajib",
-                "Tarik", 100000));*/
-
-      /*  recyclerView =  v.findViewById(R.id.recyclerview_a);
-        recyclerView.setHasFixedSize(true);
-
-        layoutManager = new LinearLayoutManager(getActivity());
-        adapter = new TabunganA_Adapter(itemList);
-
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();*/
 
         Call<TransaksiResponse> call = RetrofitClient
                 .getInstance()
