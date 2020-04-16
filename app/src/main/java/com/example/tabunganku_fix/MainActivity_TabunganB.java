@@ -240,7 +240,7 @@ public class MainActivity_TabunganB extends AppCompatActivity {
 
         myPdfDocument.finishPage(myPage);
 
-        String myFilePath = Environment.getExternalStorageDirectory().getPath()+"/Laporan_Tabungan_Reguler.pdf";
+        String myFilePath = Environment.getExternalStorageDirectory().getPath()+"/Laporan_Tabungan_Prestasi.pdf";
         File myFile = new File(myFilePath);
 
         try {
