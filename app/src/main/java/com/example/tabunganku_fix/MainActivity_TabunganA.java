@@ -35,6 +35,7 @@ import com.example.tabunganku_fix.activity.PilihTabungan;
 import com.example.tabunganku_fix.adapter.TabunganA_Adapter;
 import com.example.tabunganku_fix.api_helper.RetrofitClient;
 import com.example.tabunganku_fix.fragment.PengaturanFragment;
+import com.example.tabunganku_fix.models.JenisTabungan;
 import com.example.tabunganku_fix.models.Transaksi;
 import com.example.tabunganku_fix.models.User;
 import com.example.tabunganku_fix.response.ProfileResponse;
@@ -44,7 +45,11 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -63,6 +68,7 @@ public class MainActivity_TabunganA extends AppCompatActivity {
     int page =0, width = 595, height = 842;
 
     User users = SharedPrefManager.getInstance(this).getUser();
+    JenisTabungan jenis_tabungan = SharedPrefManager.getInstance(this).getJenisTabungan();
     String url = "http://192.168.100.10/TugasAkhir_TabunganKu/public/img/";
     List<Transaksi> transaksiList;
     Fragment fragmentActivity;
@@ -72,7 +78,6 @@ public class MainActivity_TabunganA extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabungan_a);
         Toolbar toolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
 
         bmp = BitmapFactory.decodeResource(getResources(), R.drawable.icons1);
@@ -94,6 +99,7 @@ public class MainActivity_TabunganA extends AppCompatActivity {
         requestNama();
         restart();
     }
+
     private void requestNama(){
         String token = SharedPrefManager.getInstance(this).getUser().getToken();
         Call<ProfileResponse> call;
@@ -209,7 +215,7 @@ public class MainActivity_TabunganA extends AppCompatActivity {
         Canvas canvas = myPage.getCanvas();
         canvas.drawBitmap(test, 12, 12, myPaint);
 
-        //Nama Aplikas
+        //Nama Aplikasi
         Paint aplikasi = new Paint();
         aplikasi.setTextAlign(Paint.Align.LEFT);
         aplikasi.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
@@ -241,6 +247,32 @@ public class MainActivity_TabunganA extends AppCompatActivity {
         kelas_user.setTextSize(10);
         canvas.drawText(users.getKelas(), 20, 131, kelas_user);
 
+        //Tanggal Mengunduh Laporan
+        Paint tanggal = new Paint();
+        tanggal.setTextAlign(Paint.Align.LEFT);
+        tanggal.setTextSize(10);
+        canvas.drawText("Tanggal", 20, 160, tanggal);
+
+        //Tanggal Mengunduh Laporan
+        DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH);
+        Date date = new Date();
+        Paint tanggal_download = new Paint();
+        tanggal_download.setTextAlign(Paint.Align.LEFT);
+        tanggal_download.setTextSize(10);
+        canvas.drawText(dateFormat.format(date), 20, 175, tanggal_download);
+
+        //Tahun Angkatan
+        Paint tahun = new Paint();
+        tahun.setTextAlign(Paint.Align.RIGHT);
+        tahun.setTextSize(10);
+        canvas.drawText("Angkatan", 560, 78, tahun);
+
+        //Tahun Angkatan
+        Paint tahun_angkatan = new Paint();
+        tahun_angkatan.setTextAlign(Paint.Align.RIGHT);
+        tahun_angkatan.setTextSize(10);
+        canvas.drawText(String.valueOf(users.getAngkatan()), 560, 92, tahun_angkatan);
+
         //Jenis Tabungan
         Paint jenis = new Paint();
         jenis.setTextAlign(Paint.Align.RIGHT);
@@ -252,6 +284,24 @@ public class MainActivity_TabunganA extends AppCompatActivity {
         nama_tabungan.setTextAlign(Paint.Align.RIGHT);
         nama_tabungan.setTextSize(10);
         canvas.drawText("Tabungan Reguler", 560, 131, nama_tabungan);
+
+        //Tabel
+        myPaint.setStyle(Paint.Style.STROKE);
+        myPaint.setStrokeWidth(2);
+        canvas.drawRect(20, 200, 575,230,myPaint);
+
+        myPaint.setTextAlign(Paint.Align.LEFT);
+        myPaint.setStyle(Paint.Style.FILL);
+        canvas.drawText("No.", 40, 220, myPaint);
+        canvas.drawText("Tanggal", 100, 220, myPaint);
+        canvas.drawText("Kegiatan Transaksi", 240, 220, myPaint);
+        canvas.drawText("Nominal", 480, 220, myPaint);
+
+        canvas.drawLine(80, 205, 80, 225, myPaint);
+        canvas.drawLine(190, 205, 190, 225, myPaint);
+        canvas.drawLine(400, 205, 400, 225, myPaint);
+
+
 
         myPdfDocument.finishPage(myPage);
 
