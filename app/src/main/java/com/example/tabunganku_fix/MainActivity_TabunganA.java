@@ -12,6 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -57,7 +59,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity_TabunganA extends AppCompatActivity {
-
     private AppBarConfiguration mAppBarConfiguration;
     Context mContext;
     TextView namaprofile;
@@ -79,7 +80,6 @@ public class MainActivity_TabunganA extends AppCompatActivity {
         setContentView(R.layout.activity_tabungan_a);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         bmp = BitmapFactory.decodeResource(getResources(), R.drawable.icons1);
         test = Bitmap.createScaledBitmap(bmp, 36, 36, false);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -116,7 +116,6 @@ public class MainActivity_TabunganA extends AppCompatActivity {
                             getAvatar()).into(profile);
                 }
             }
-
             @Override
             public void onFailure(Call<ProfileResponse> call, Throwable t) {
                 Log.e("debug", "onFailure: ERROR > " + t.toString());
@@ -168,6 +167,7 @@ public class MainActivity_TabunganA extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -283,11 +283,11 @@ public class MainActivity_TabunganA extends AppCompatActivity {
         Paint nama_tabungan = new Paint();
         nama_tabungan.setTextAlign(Paint.Align.RIGHT);
         nama_tabungan.setTextSize(10);
-        canvas.drawText("Tabungan Reguler", 560, 131, nama_tabungan);
+        canvas.drawText("TABUNGAN REGULER", 560, 131, nama_tabungan);
 
         //Tabel
         myPaint.setStyle(Paint.Style.STROKE);
-        myPaint.setStrokeWidth(2);
+        myPaint.setStrokeWidth(1);
         canvas.drawRect(20, 200, 575,230,myPaint);
 
         myPaint.setTextAlign(Paint.Align.LEFT);
@@ -301,10 +301,7 @@ public class MainActivity_TabunganA extends AppCompatActivity {
         canvas.drawLine(190, 205, 190, 225, myPaint);
         canvas.drawLine(400, 205, 400, 225, myPaint);
 
-
-
         myPdfDocument.finishPage(myPage);
-
         String myFilePath = Environment.getExternalStorageDirectory().getPath()+"/Laporan_Tabungan_Reguler.pdf";
         File myFile = new File(myFilePath);
 
@@ -321,7 +318,19 @@ public class MainActivity_TabunganA extends AppCompatActivity {
     }
 
 }
-  /*String myString = editText.getText().toString();
+/*DownloadManager.Request request = new DownloadManager.Request();
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE |
+                    DownloadManager.Request.NETWORK_WIFI);
+            request.setTitle("Download");
+            request.setDescription("Download laporan...");
+            request.allowScanningByMediaScanner();
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,"/Laporan.pdf");
+            DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+            manager.enqueue(request);
+*/
+
+/*String myString = editText.getText().toString();
         int x = 10, y = 25;
 
         for (String line : myString.split("\n")){
