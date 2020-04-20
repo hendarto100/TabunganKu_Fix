@@ -68,7 +68,6 @@ public class LaporanFragment_A extends Fragment {
 
         bar = v.findViewById(R.id.bar_a);
         hide = v.findViewById(R.id.bar_laporan_a);
-        final String nis2 = transaksi.getNis();
 
         Call<TransaksiResponse> call = RetrofitClient
                 .getInstance()
@@ -108,12 +107,4 @@ public class LaporanFragment_A extends Fragment {
         });
         return v;
     }
-
-    /*public LiveData<List<Transaksi>> getTransaksi(){
-        if(transaksiList==null){
-            transaksiList = new MutableLiveData<List<Transaksi>>();
-        }
-        return transaksiList;
-    }
-*/
 }

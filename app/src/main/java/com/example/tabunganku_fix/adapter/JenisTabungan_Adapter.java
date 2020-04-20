@@ -17,7 +17,8 @@ import com.example.tabunganku_fix.models.JenisTabungan;
 
 import java.util.ArrayList;
 
-public class JenisTabungan_Adapter extends RecyclerView.Adapter<JenisTabungan_Adapter.ViewHolder> {
+public class
+JenisTabungan_Adapter extends RecyclerView.Adapter<JenisTabungan_Adapter.ViewHolder> {
     Context mContext;
     ArrayList<JenisTabungan> jenisTabunganList;
 

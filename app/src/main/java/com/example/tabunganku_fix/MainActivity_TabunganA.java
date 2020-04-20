@@ -10,6 +10,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DownloadManager;
@@ -41,14 +42,17 @@ import com.example.tabunganku_fix.models.JenisTabungan;
 import com.example.tabunganku_fix.models.Transaksi;
 import com.example.tabunganku_fix.models.User;
 import com.example.tabunganku_fix.response.ProfileResponse;
+import com.example.tabunganku_fix.response.TransaksiResponse;
 import com.example.tabunganku_fix.server.SharedPrefManager;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -74,12 +78,19 @@ public class MainActivity_TabunganA extends AppCompatActivity {
     List<Transaksi> transaksiList;
     Fragment fragmentActivity;
 
+    PdfDocument myPdfDocument;
+    PdfDocument.PageInfo myPageInfo;
+    PdfDocument.Page myPage;
+    Canvas canvas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabungan_a);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        User users = SharedPrefManager.getInstance(this).getUser();
+
         bmp = BitmapFactory.decodeResource(getResources(), R.drawable.icons1);
         test = Bitmap.createScaledBitmap(bmp, 36, 36, false);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -207,12 +218,13 @@ public class MainActivity_TabunganA extends AppCompatActivity {
         //adapter.notifyDataSetChanged()
     }
 
-    public void onCreatePDF(View view){
-        PdfDocument myPdfDocument = new PdfDocument();
-        PdfDocument.PageInfo myPageInfo = new PdfDocument.PageInfo.Builder(width, height, page).create();
-        PdfDocument.Page myPage = myPdfDocument.startPage(myPageInfo);
-        Paint myPaint = new Paint();
-        Canvas canvas = myPage.getCanvas();
+    public void onCreatePDF(View view) {
+        myPdfDocument = new PdfDocument();
+        myPageInfo =  new PdfDocument.PageInfo.Builder(width, height, page).create();
+        myPage =  myPdfDocument.startPage(myPageInfo);
+        canvas = myPage.getCanvas();
+
+        final Paint myPaint = new Paint();
         canvas.drawBitmap(test, 12, 12, myPaint);
 
         //Nama Aplikasi
@@ -288,7 +300,7 @@ public class MainActivity_TabunganA extends AppCompatActivity {
         //Tabel
         myPaint.setStyle(Paint.Style.STROKE);
         myPaint.setStrokeWidth(1);
-        canvas.drawRect(20, 200, 575,230,myPaint);
+        canvas.drawRect(20, 200, 575, 230, myPaint);
 
         myPaint.setTextAlign(Paint.Align.LEFT);
         myPaint.setStyle(Paint.Style.FILL);
@@ -301,22 +313,58 @@ public class MainActivity_TabunganA extends AppCompatActivity {
         canvas.drawLine(190, 205, 190, 225, myPaint);
         canvas.drawLine(400, 205, 400, 225, myPaint);
 
+        String token = users.getToken();
+        Call<TransaksiResponse> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .TransaksiSiswa(token);
+        call.enqueue(new Callback<TransaksiResponse>() {
+            @Override
+            public void onResponse(Call<TransaksiResponse> call, Response<TransaksiResponse> response) {
+                Log.i("test", "response");
+                ArrayList<Transaksi> itemList = new ArrayList<>();
+                TransaksiResponse responseTransaksi = response.body();
+                if (response.isSuccessful()) {
+                    for (Transaksi var : responseTransaksi.getTransaksi())
+                        if(var.getJenis_tabungan().equals("Tabungan Wajib")) {
+                            {
+                                itemList.add(new Transaksi(var.getId(), var.getKode_transaksi(),
+                                        var.getNis(), var.getJenis_tabungan(), var.getJenis_transaksi(),
+                                        var.getNominal(), var.getCreated_at()));
+                            }
+                            Log.i("transaksi woi", var.getJenis_transaksi() + " " + var.getKode_transaksi() +
+                                    " " + var.getNominal());
+                           /* Paint transaksi = new Paint();
+                            transaksi.setTextAlign(Paint.Align.LEFT);
+                            transaksi.setTextSize(10);
+                            canvas.drawText(String.valueOf("test"), 450, 240, transaksi);*/
+
+                            Toast.makeText(MainActivity_TabunganA.this, String.valueOf(var.getNominal()), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }
+            @Override
+            public void onFailure(Call<TransaksiResponse> call, Throwable t) {
+                Log.e("debug", "onFailure: ERROR > " + t.toString());
+            }
+        });
+
         myPdfDocument.finishPage(myPage);
-        String myFilePath = Environment.getExternalStorageDirectory().getPath()+"/Laporan_Tabungan_Reguler.pdf";
+        String myFilePath = Environment.getExternalStorageDirectory().getPath() + "/Laporan_Tabungan_Reguler.pdf";
         File myFile = new File(myFilePath);
 
         try {
             myPdfDocument.writeTo(new FileOutputStream(myFile));
-            Toast.makeText(getApplicationContext(),"Laporan berhasil tersimpan", Toast.LENGTH_SHORT).show();
-        }
-        catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Laporan berhasil tersimpan", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"Terjadi keselahan", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Terjadi keselahan", Toast.LENGTH_SHORT).show();
+            Log.e("Error", "error apa nii" +e.toString());
             //editText.setText("ERROR");
         }
         myPdfDocument.close();
     }
-
 }
 /*DownloadManager.Request request = new DownloadManager.Request();
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE |
@@ -330,7 +378,7 @@ public class MainActivity_TabunganA extends AppCompatActivity {
             manager.enqueue(request);
 */
 
-/*String myString = editText.getText().toString();
+/*      String myString = editText.getText().toString();
         int x = 10, y = 25;
 
         for (String line : myString.split("\n")){

@@ -4,8 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
-public class Transaksi {
+public class Transaksi{
     @SerializedName("id")
     @Expose
     private int id;
